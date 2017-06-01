@@ -9,7 +9,7 @@ use Purifier;
 use JWTAuth;
 use Auth;
 use App\Comment;
-use App\product;
+use App\Product;
 use Response;
 
 class CommentsController extends Controller
@@ -43,10 +43,10 @@ class CommentsController extends Controller
     $validator = Validator::make(Purifier::clean($request->all()),$rules);
     if($validator->fails())
     {
-      return Response::json(["error" => "Please fill out all fields"])
+      return Response::json(["error" => "Please fill out all fields"]);
     }
     $user = Auth::user();
-    $check = product::find($request->input("productID"));
+    $check = Product::find($request->input("productID"));
     if(empty($check))
     {
       return Response::json(["error" => "Product not found!"]);
@@ -67,7 +67,7 @@ class CommentsController extends Controller
       return Response::json(["success" => "You did it!", "data" => $commentData]);
   }
 
-  public function deleteComment($id);
+  public function deleteComment($id)
   {
     $user = Auth::user();
     if($user->roleID != 1)

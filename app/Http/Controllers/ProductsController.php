@@ -42,7 +42,7 @@ class ProductsController extends Controller
       }
 
       $user=Auth::user();
-      if($user->roleID ! = 1)
+      if($user->roleID != 1)
       {
         return Response::json(["error" => "Not Allowed!"]);
       }
@@ -84,7 +84,7 @@ class ProductsController extends Controller
     }
 
     $user=Auth::user();
-    if($user->roleID ! = 1)
+    if($user->roleID != 1)
     {
       return Response::json(["error" => "Not Allowed!"]);
     }

@@ -39,7 +39,7 @@ Route::get('getRole', 'RolesController@index');
 Route::post('storeRole', 'RolesController@storeRole');
 Route::post('updateRole/{id}', 'RolesController@updateRole');
 Route::get('showRole/{id}', 'RolesController@showRole');
-Route::post('destroyRole/{id}', 'RolesController@destroRole');
+Route::post('destroyRole/{id}', 'RolesController@destroyRole');
 
 Route::post('signUp', 'UsersController@signUp');
 Route::post('signIn', 'UsersController@signIn');

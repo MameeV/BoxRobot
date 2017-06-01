@@ -17,7 +17,7 @@ class CategoriesController extends Controller
     {
       $this->middleware("jwt.auth", ["only" => ["storeCategory", "destroyCategory"]]);
     }
-    
+
     public function home()
     {
       return File::get("index.html");
@@ -25,7 +25,7 @@ class CategoriesController extends Controller
 
     public function index()
     {
-      $categories = Category::orderBy("id", "asc");->get();
+      $categories = Category::orderBy("id", "asc")->get();
       return Response::json($categories);
     }
 
@@ -40,7 +40,7 @@ class CategoriesController extends Controller
         return Response::jsaon(["error" => "You need to fill out all fields"]);
       }
       $user = Auth::user();
-      if($user->roleID ! = 1)
+      if($user->roleID != 1)
       {
         return Response::json(["error" => "Not Allowed!"]);
       }
@@ -61,7 +61,7 @@ class CategoriesController extends Controller
         return Response::json(['error'=>"ERROR! Category did not update!"]);
       }
       $user = Auth::user();
-      if($user->roleID ! = 1)
+      if($user->roleID != 1)
       {
         return Response::json(["error" => "Not Allowed!"]);
       }
