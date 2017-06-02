@@ -28,18 +28,12 @@ class UsersController extends Controller
   {
     $email = $request->input("email");
     $password = $request->input("password");
-    $check = User::where("email","=",$email)->where("password","!=",NULL)->first();
-    if(!empty($check)){
-      $cred = ["email", "password"];
-      $credentials = compact("email","password",$cred);
+    $cred = ["email", "password"];
+    $credentials = compact("email","password",$cred);
 
-      $token = JWTAuth::attempt($credentials);
+    $token = JWTAuth::attempt($credentials);
 
-      return Response::json(compact("token"));
-    }
-    else {
-      return Response::json(["empty" => "User not found"]);
-    }
+    return Response::json(compact("token"));
   }
 
   public function signUp(Request $request)
@@ -47,14 +41,23 @@ class UsersController extends Controller
     $email = $request->input("email");
     $password = $request->input("password");
     $username = $request->input("username");
+    $phone = $request->input("phone");
+    $name = $request->input("name");
+    $address = $request->input("address");
 
-    $check = User::where("email","=", $email)->orWhere("name","=",$username)->first();
+
+    $check = User::where("email","=", $email)->orWhere("username","=",$username)->first();
 
     if(empty($check)){
       $user = new User;
-      $user->name = $username;
+      $user->username = $username;
       $user->email = $email;
       $user->roleID = 3;
+      $user->name = $name;
+      $user->phone = $phone;
+      $user->address = $address;
+
+
 
       $user->password = Hash::make($password);
       $user->save();
@@ -67,6 +70,6 @@ class UsersController extends Controller
     {
       $user = Auth::user();
       $user = User::find($user->id);
-      return Response::json($user);
+      return Response::json(["user" => $user]);
     }
   }
