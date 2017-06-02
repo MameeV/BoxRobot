@@ -70,6 +70,3 @@ class UsersController extends Controller
       return Response::json($user);
     }
   }
-
-
-}
