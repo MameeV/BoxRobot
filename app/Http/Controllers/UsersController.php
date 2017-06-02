@@ -14,7 +14,7 @@ use File;
 
 class UsersController extends Controller
 {
-  public function __contruct()
+  public function __construct()
   {
     $this->middleware("jwt.auth", ["except" => ["signIn", "signUp"]]);
   }
