@@ -44,8 +44,10 @@ Route::post('destroyRole/{id}', 'RolesController@destroyRole');
 Route::post('signUp', 'UsersController@signUp');
 Route::post('signIn', 'UsersController@signIn');
 Route::post('UpdateUsers/{id}', 'UsersController@UpdateUsers');
+Route::post('destroyUser/{id}', 'UsersController@destroyUser');
 Route::get('getUser', 'UsersController@getUser');
 Route::get('allUsers', 'UsersController@allUsers');
 Route::get('showUser/{id}', 'UsersController@showUser');
+
 //enter more routes here, leaving below as last route!
 Route::any('{path?}', 'MainController@index')->where("path", ".+");

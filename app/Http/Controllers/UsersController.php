@@ -92,7 +92,7 @@ class UsersController extends Controller
     $user->address = $request->input('address');
     $bio = $request->input("bio");
     $user->bio = $request->input('bio');
-    $image = $request->file('image');
+    $user->$image = $request->file('image');
     $imageName = $image->getClientOriginalName();
     $image->move("storage/", $imageName);
     $user->image = $request->root()."/storage/".$imageName;
@@ -117,5 +117,11 @@ class UsersController extends Controller
     {
       $user = User::find($id);
       return Response::json($user);
+    }
+    public function destroyUser($id)
+    {
+      $user = User::find($id);
+      $user->delete();
+      return Response::json(['success' => "User Deleted!"]);
     }
   }
