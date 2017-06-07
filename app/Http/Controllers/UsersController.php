@@ -92,10 +92,15 @@ class UsersController extends Controller
     $user->address = $request->input('address');
     $bio = $request->input("bio");
     $user->bio = $request->input('bio');
-    $user->$image = $request->file('image');
-    $imageName = $image->getClientOriginalName();
-    $image->move("storage/", $imageName);
-    $user->image = $request->root()."/storage/".$imageName;
+    if($request->file("image"))
+    {
+      $image = $request->file('image');
+      $imageName = $image->getClientOriginalName();
+      $image->move("storage/", $imageName);
+      $user->image = $request->root()."/storage/".$imageName;
+    }
+
+
 
     $user->save();
 

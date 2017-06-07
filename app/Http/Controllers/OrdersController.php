@@ -16,7 +16,7 @@ class OrdersController extends Controller
 {
   public function __construct()
   {
-    $this->middleware("jwt.auth", ["only" => ["index", "showUserOrders", "storeOrder", "distroyOrder", "updateOrder"]]);
+    $this->middleware("jwt.auth", ["only" => ["index", "showUserOrders", "storeOrder", "destroyOrder", "updateOrder"]]);
   }
 
   public function index()
@@ -63,7 +63,8 @@ class OrdersController extends Controller
     $order->userID = Auth::user()->id;
     $order->productID = $request->input('productID');
     $order->amount = $request->input('amount');
-    $order->totalPrice = $request->input('amount')*$product->price;
+    $order->totalPrice = $request->input('amount')*$product->price*$product->months;
+
     $order->comment = $request->input("comment");
     $order->save();
 
@@ -75,6 +76,7 @@ class OrdersController extends Controller
     $rules = [
       'amount' => 'required',
       'comment' => 'required',
+      'productID' => 'required',
     ];
 
     $validator = Validator::make(Purifier::clean($request->all()),$rules);
@@ -83,7 +85,7 @@ class OrdersController extends Controller
       return Response::json(['error'=>"ERROR! Please fill out all fields."]);
     }
 
-    $Product = Product::find($request->input("productID"));
+    $product = Product::find($request->input("productID"));
     if(empty($product))
     {
       return Response::json(["error" => "Product not found."]);
@@ -96,8 +98,8 @@ class OrdersController extends Controller
 
     $order = Order::find($id);
     $order->userID = Auth::user()->id;
-    $order->amount = $reequest->input("amount");
-    $order->totalPrice = $request->input("amount")*$product->price;
+    $order->amount = $request->input("amount");
+    $order->totalPrice = $request->input('amount')*$product->price*$product->months;
     $order->comment = $request->input("comment");
     $order->save();
 

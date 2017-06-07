@@ -15,12 +15,12 @@ class ProductsController extends Controller
 {
   public function __construct()
   {
-    $this->middleware("jwt.auth", ["only" => ["storeProduct", "destroyProduct", "usdateProduct"]]);
+    $this->middleware("jwt.auth", ["only" => ["storeProduct", "destroyProduct", "updateProduct"]]);
   }
 
   public function index()
   {
-    $products = Product::orderby("id","desc")->get();
+    $products = Product::orderby("id","asc")->get();
     return Response::json($products);
   }
 
@@ -33,6 +33,7 @@ class ProductsController extends Controller
       'description' => 'required',
       'price' => 'required',
       'stock' => 'required',
+      'months' => 'required'
     ];
 
     $validator = Validator::make(Purifier::clean($request->all()), $rules);
@@ -54,7 +55,7 @@ class ProductsController extends Controller
     $product->description = $request->input('description');
     $product->price = $request->input('price');
     $product->stock = $request->input('stock');
-
+    $product->months = $request->input('months');
     $image = $request->file('image');
     $imageName = $image->getClientOriginalName();
     $image->move('storage/', $imageName);
@@ -74,7 +75,7 @@ class ProductsController extends Controller
       'description' => 'required',
       'price' => 'required',
       'stock' => 'required',
-
+      'months' => 'required'
     ];
 
     $validator = Validator::make(Purifier::clean($request->all()), $rules);
@@ -96,11 +97,15 @@ class ProductsController extends Controller
     $product->description = $request->input('description');
     $product->price = $request->input('price');
     $product->stock = $request->input('stock');
+    $product->months = $request->input('months');
+    if($request->file("image"))
+    {
+      $image = $request->file('image');
+      $imageName = $image->getClientOriginalName();
+      $image->move("storage/", $imageName);
+      $product->image = $request->root()."/storage/".$imageName;
+    }
 
-    $image = $request->file('image');
-    $imageName = $image->getClientOriginalName();
-    $image->move("storage/", $imageName);
-    $product->image = $request->root()."storage/".$imageName;
 
     $product->save();
 

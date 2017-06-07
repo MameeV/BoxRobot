@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('address');
             $table->string('phone');
             $table->string('bio')->nullable();
-            $table->string('image')->default("http://i1065.photobucket.com/albums/u395/monkeyzealer/794180f2868e8d2e79cb08dc5c874a73_zpsik9y0hmm.png");
+            $table->string('image')->default("http://oi1065.photobucket.com/albums/u395/monkeyzealer/794180f2868e8d2e79cb08dc5c874a73_zpsik9y0hmm.png");
             $table->rememberToken();
             $table->timestamps();
         });

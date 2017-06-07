@@ -37,7 +37,7 @@ class CategoriesController extends Controller
       $validator = Validator::make(Purifier::clean($request->all()),$rules);
       if($validator->fails())
       {
-        return Response::jsaon(["error" => "You need to fill out all fields"]);
+        return Response::json(["error" => "You need to fill out all fields"]);
       }
       $user = Auth::user();
       if($user->roleID != 1)
