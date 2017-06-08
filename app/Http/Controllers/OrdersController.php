@@ -19,6 +19,7 @@ class OrdersController extends Controller
     $this->middleware("jwt.auth", ["only" => ["index", "showUserOrders", "storeOrder", "destroyOrder", "updateOrder"]]);
   }
 
+
   public function index()
   {
     $user = Auth::user();
