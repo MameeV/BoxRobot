@@ -63,7 +63,7 @@ class OrdersController extends Controller
     $order->userID = Auth::user()->id;
     $order->productID = $request->input('productID');
     $order->amount = $request->input('amount');
-    $order->totalPrice = $request->input('amount')*$product->price*$product->months;
+    $order->totalPrice = $request->input('amount')*$product->price;
 
     $order->comment = $request->input("comment");
     $order->save();
@@ -99,7 +99,7 @@ class OrdersController extends Controller
     $order = Order::find($id);
     $order->userID = Auth::user()->id;
     $order->amount = $request->input("amount");
-    $order->totalPrice = $request->input('amount')*$product->price*$product->months;
+    $order->totalPrice = $request->input('amount')*$product->price;
     $order->comment = $request->input("comment");
     $order->save();
 
